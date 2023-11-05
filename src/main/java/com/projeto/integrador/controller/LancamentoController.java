@@ -1,5 +1,7 @@
 package com.projeto.integrador.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,20 +10,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projeto.integrador.domain.dto.ConsultaLancamentoDTO;
+import com.projeto.integrador.service.LancamentoService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping(path = "/v1/api/lancamento")
 @Api(tags = "Controle de Lançamentos")
+@RequiredArgsConstructor
 public class LancamentoController {
+	
+	private final LancamentoService service;
 	
 	@GetMapping("")
 	@ApiModelProperty(position = 1)
 	@ApiOperation(value = "Endpoint para obter todos os lançamenttos")
 	public ResponseEntity<?> listarLancamentos(){
-		return ResponseEntity.ok("Lista de lançamentos");
+		List<ConsultaLancamentoDTO> lancamentos = service.findAll();
+		return ResponseEntity.ok(lancamentos);
 	}
 	
 	@PostMapping("/entrada")
