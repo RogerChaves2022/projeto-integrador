@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.projeto.integrador.domain.dto.ConsultaLancamentoDTO;
-import com.projeto.integrador.domain.dto.LancamentoDTO;
 import com.projeto.integrador.domain.entity.Lancamento;
 import com.projeto.integrador.exceptions.LancamentoNaoEncontrado;
 import com.projeto.integrador.mapper.EstoqueMapper;
@@ -13,10 +12,8 @@ import com.projeto.integrador.repository.LancamentoRepository;
 import com.projeto.integrador.service.LancamentoService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Service
-@Log4j2
 @RequiredArgsConstructor
 public class LancamentoServiceImpl implements LancamentoService {
 
@@ -25,6 +22,12 @@ public class LancamentoServiceImpl implements LancamentoService {
 	
 	public List<Lancamento> findByProduto(Long produtoId) {
 		return repository.findByProduto(produtoId);
+	}
+	
+	@Override
+	public List<ConsultaLancamentoDTO> findLancamentosByProduto(Long produtoId) {
+		List<Lancamento> lancamentos = repository.findByProduto(produtoId);
+		return mapper.listLancamentoEntidadeParaLancamentoDTO(lancamentos);
 	}
 	
 	@Override
@@ -41,12 +44,13 @@ public class LancamentoServiceImpl implements LancamentoService {
 
 	@Override
 	public void deleteById(Long id) {
+		repository.findById(id).orElseThrow(()-> new LancamentoNaoEncontrado(id));
 		repository.deleteById(id);
 	}
-	
-	public ConsultaLancamentoDTO cadastrarLancamento(LancamentoDTO dto) {
-		Lancamento lancamento = mapper.lancamentoDTOparaLancamentoEntidade(dto);
-		return null;
-		
+
+	public Lancamento save(Lancamento lancamento) {
+		return repository.save(lancamento);
 	}
+	
+	
 }

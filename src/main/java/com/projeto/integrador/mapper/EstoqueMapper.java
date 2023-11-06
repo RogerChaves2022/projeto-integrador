@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Qualifier;
 import org.mapstruct.factory.Mappers;
 
 import com.projeto.integrador.domain.dto.ConsultaLancamentoDTO;
@@ -26,7 +25,7 @@ public interface EstoqueMapper {
 	Produto produtoDTOparaProdutoEntidade(ProdutoDTO dto);
 	
 	@Mapping(target = "id", ignore = true)
-	//@Mapping(target = "produto", qualifiedByName = "encontrarProdutoPorId(produtoId)")
+	@Mapping(target = "produto.id", source = "produtoId")
 	@Mapping(target = "dtHrCriacao", expression = "java(java.time.LocalDateTime.now())")
 	Lancamento lancamentoDTOparaLancamentoEntidade(LancamentoDTO dto);
 	
