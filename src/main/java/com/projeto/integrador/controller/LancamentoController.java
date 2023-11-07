@@ -2,7 +2,11 @@ package com.projeto.integrador.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(path = "/v1/api/lancamento")
 @Api(tags = "Controle de Lançamentos")
 @RequiredArgsConstructor
+@Validated
 public class LancamentoController {
 	
 	private final LancamentoService service;
@@ -51,7 +56,7 @@ public class LancamentoController {
 	@PostMapping("/entrada")
 	@ApiModelProperty(position = 2)
 	@ApiOperation(value = "Endpoint para Cadastrar lançamento de entrada")
-	public ResponseEntity<?> cadastrarEntrada(@RequestParam("quantidade")Double quantidade, @RequestParam("produtoId")Long produtoId){
+	public ResponseEntity<?> cadastrarEntrada(@Positive @RequestParam("quantidade")Double quantidade, @RequestParam("produtoId")Long produtoId){
 		LancamentoDTO build = LancamentoDTO.builder().produtoId(produtoId).quantidade(quantidade).tipoLancamento(TipoLancamento.ENTRADA).build();
 		try {
 			estoqueService.cadastrarLancamento(build);
@@ -66,7 +71,7 @@ public class LancamentoController {
 	@PostMapping("/saida")
 	@ApiModelProperty(position = 3)
 	@ApiOperation(value = "Endpoint para Cadastrar lançamento de saída")
-	public ResponseEntity<?> cadastrarSaida(@RequestParam("quantidade")Double quantidade, @RequestParam("produtoId")Long produtoId){
+	public ResponseEntity<?> cadastrarSaida(@Positive @RequestParam("quantidade")Double quantidade, @RequestParam("produtoId")Long produtoId){
 		LancamentoDTO build = LancamentoDTO.builder().produtoId(produtoId).quantidade(quantidade).tipoLancamento(TipoLancamento.SAIDA).build();
 		try {
 			estoqueService.cadastrarLancamento(build);

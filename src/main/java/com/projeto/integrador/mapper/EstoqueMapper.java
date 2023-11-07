@@ -33,6 +33,7 @@ public interface EstoqueMapper {
 	
 	@Mapping(target = "id", source = "dto.id")
 	@Mapping(target = "nomeProduto", source = "produto.nome")
+	@Mapping(target = "unidadeMedida", source = "produto.unidadeMedida")
 	ConsultaLancamentoDTO lancamentoEntidadeParaLancamentoDTO(Lancamento dto);
 	
 	@Mapping(target = "id", source = "dto.id")
