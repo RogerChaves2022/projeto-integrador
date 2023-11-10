@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 @Api(tags = "Controle de Produtos")
 @RequiredArgsConstructor
 @Validated
+@CrossOrigin(origins = "*")
 public class ProdutoController {
 	
 	private final ProdutoService service;

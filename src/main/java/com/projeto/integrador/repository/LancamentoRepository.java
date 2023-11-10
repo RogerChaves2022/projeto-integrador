@@ -12,7 +12,7 @@ import com.projeto.integrador.domain.entity.Lancamento;
 @Repository
 public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
 
-	@Query("Select l from Lancamento l join l.produto p where p.id = :produto")
+	@Query("Select l from Lancamento l join l.produto p where p.id = :produto order by l.dtHrCriacao desc")
 	List<Lancamento> findByProduto(@Param("produto") Long produtoId);
 
 }

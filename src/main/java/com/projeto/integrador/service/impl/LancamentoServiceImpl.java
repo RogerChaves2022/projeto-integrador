@@ -1,5 +1,6 @@
 package com.projeto.integrador.service.impl;
 
+import static com.projeto.integrador.domain.entity.Lancamento.SORT_BY_CREATED_AT_DESC;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 	
 	@Override
 	public List<ConsultaLancamentoDTO> findAll(){
-		List<Lancamento> lancamentos = repository.findAll();
+		List<Lancamento> lancamentos = repository.findAll(SORT_BY_CREATED_AT_DESC);
 		return mapper.listLancamentoEntidadeParaLancamentoDTO(lancamentos);
 	}
 

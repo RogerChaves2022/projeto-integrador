@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.data.domain.Sort;
 
 import com.projeto.integrador.domain.enumarations.TipoLancamento;
 
@@ -46,5 +49,9 @@ public class Lancamento {
 	
 	@Column(name = "DATA_CRIACAO_LANCAMENTO")
 	private LocalDateTime dtHrCriacao;
-
+	
+	
+	 @Transient
+	  public static final Sort SORT_BY_CREATED_AT_DESC = 
+	                        Sort.by(Sort.Direction.DESC, "dtHrCriacao");
 }

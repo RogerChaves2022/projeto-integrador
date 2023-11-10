@@ -2,11 +2,11 @@ package com.projeto.integrador.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 @Api(tags = "Controle de Lançamentos")
 @RequiredArgsConstructor
 @Validated
+@CrossOrigin(origins = "*")
 public class LancamentoController {
 	
 	private final LancamentoService service;
@@ -59,8 +60,8 @@ public class LancamentoController {
 	public ResponseEntity<?> cadastrarEntrada(@Positive @RequestParam("quantidade")Double quantidade, @RequestParam("produtoId")Long produtoId){
 		LancamentoDTO build = LancamentoDTO.builder().produtoId(produtoId).quantidade(quantidade).tipoLancamento(TipoLancamento.ENTRADA).build();
 		try {
-			estoqueService.cadastrarLancamento(build);
-			return ResponseEntity.ok(build);
+			ConsultaLancamentoDTO cadastrarLancamento = estoqueService.cadastrarLancamento(build);
+			return ResponseEntity.ok(cadastrarLancamento);
 		} catch (ProdutoNaoEncontrado e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,8 +75,8 @@ public class LancamentoController {
 	public ResponseEntity<?> cadastrarSaida(@Positive @RequestParam("quantidade")Double quantidade, @RequestParam("produtoId")Long produtoId){
 		LancamentoDTO build = LancamentoDTO.builder().produtoId(produtoId).quantidade(quantidade).tipoLancamento(TipoLancamento.SAIDA).build();
 		try {
-			estoqueService.cadastrarLancamento(build);
-			return ResponseEntity.ok(build);
+			ConsultaLancamentoDTO cadastrarLancamento = estoqueService.cadastrarLancamento(build);
+			return ResponseEntity.ok(cadastrarLancamento);
 		} catch (ProdutoNaoEncontrado e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
