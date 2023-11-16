@@ -19,4 +19,6 @@ public interface ProdutoService {
 	
 	Produto save(Produto produto);
 
+	List<String> findAllClassificacoesOrderByQuantidade();
+
 }

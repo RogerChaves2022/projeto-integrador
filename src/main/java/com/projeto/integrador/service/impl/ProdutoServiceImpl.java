@@ -13,9 +13,7 @@ import com.projeto.integrador.repository.ProdutoRepository;
 import com.projeto.integrador.service.ProdutoService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @Service
 @RequiredArgsConstructor
 public class ProdutoServiceImpl implements ProdutoService {
@@ -50,5 +48,10 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Override
 	public Produto save(Produto produto) {
 		return repository.save(produto);
+	}
+
+	@Override
+	public List<String> findAllClassificacoesOrderByQuantidade() {
+		return repository.findAllClassificacoesOrderByQuantidade();
 	}
 }

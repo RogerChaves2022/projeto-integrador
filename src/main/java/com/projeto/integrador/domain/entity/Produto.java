@@ -35,6 +35,9 @@ public class Produto {
 	@Column(name = "UNIDADE_MEDIDA_PRODUTO")
 	private String unidadeMedida;
 	
+	@Column(name = "QUANTIDADE_MAXIMA_PRODUTO")
+	private Double quantidadeMaxima;
+	
 	@Column(name = "DATA_CRIACAO_PRODUTO")
 	private LocalDateTime dtCriacao;
 }

@@ -96,5 +96,12 @@ public class ProdutoController {
 			return ResponseEntity.notFound().eTag(e.getMessage()).build();
 		}
 	}
-
+	
+	@GetMapping("/classificacao")
+	@ApiModelProperty(position = 6)
+	@ApiOperation(value = "Endpoint para obter todos as classificações")
+	public ResponseEntity<?> listarClassificacoes(){
+		List<String> findAll = estoqueService.findAllClassificacoesOrderByQuantidade();
+		return ResponseEntity.ok(findAll);
+	}
 }

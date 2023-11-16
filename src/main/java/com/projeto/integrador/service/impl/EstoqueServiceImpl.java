@@ -77,11 +77,15 @@ public class EstoqueServiceImpl implements EstoqueService {
 	@Override
 	public ConsultaProdutoDTO alterarProduto(Long id,ProdutoDTO dto) {
 		Produto produto = produtoService.findProdutoById(id);
-		produto.setClassificacao(dto.getClassificacao());
-		produto.setNome(dto.getNome());
-		produto.setUnidadeMedida(dto.getUnidadeMedida());
-		produtoService.save(produto);
-		Double quantidade = quantidadeProduto(id);
-		return mapper.produtoEntidadeParaProdutoDTO(produto, quantidade);
+		Produto produtoDTOparaProdutoEntidade = mapper.produtoDTOparaProdutoEntidade(dto);
+		produtoDTOparaProdutoEntidade.setId(produto.getId());
+		produtoService.save(produtoDTOparaProdutoEntidade);
+		Double quantidade = quantidadeProduto(produto.getId());
+		return mapper.produtoEntidadeParaProdutoDTO(produtoDTOparaProdutoEntidade, quantidade);
+	}
+
+	@Override
+	public List<String> findAllClassificacoesOrderByQuantidade() {
+		return produtoService.findAllClassificacoesOrderByQuantidade();
 	}
 }

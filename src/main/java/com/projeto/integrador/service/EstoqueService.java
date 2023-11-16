@@ -19,4 +19,6 @@ public interface EstoqueService {
 
 	ConsultaProdutoDTO alterarProduto(Long id, ProdutoDTO dto);
 
+	List<String> findAllClassificacoesOrderByQuantidade();
+
 }
