@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,6 +28,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
+@Log4j2
 @RestController
 @RequestMapping(path = "/v1/api/produto")
 @Api(tags = "Controle de Produtos")
@@ -43,6 +45,9 @@ public class ProdutoController {
 	@ApiOperation(value = "Endpoint para obter todos os produtos")
 	public ResponseEntity<?> listarProdutos(){
 		List<ConsultaProdutoDTO> findAll = estoqueService.findAll();
+		if(findAll.isEmpty()){
+			return ResponseEntity.noContent().build();
+		}
 		return ResponseEntity.ok(findAll);
 	}
 	
@@ -65,7 +70,8 @@ public class ProdutoController {
 	@ApiOperation(value = "Endpoint para Cadastrar produto")
 	public ResponseEntity<?> cadastrarProduto(@Valid @RequestBody ProdutoDTO dto){
 		ConsultaProdutoDTO cadastrarProduto = service.cadastrarProduto(dto);
-		return ResponseEntity.ok(cadastrarProduto);
+		log.info(cadastrarProduto.toString());
+		return ResponseEntity.status(201).body(cadastrarProduto);
 	}
 	
 	@PutMapping("/{idProduto}")
@@ -77,7 +83,6 @@ public class ProdutoController {
 			alterarProduto = estoqueService.alterarProduto(id,dto);
 			return ResponseEntity.ok(alterarProduto);
 		} catch (ProdutoNaoEncontrado e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return ResponseEntity.notFound().eTag(e.getMessage()).build();
 		}
@@ -91,7 +96,6 @@ public class ProdutoController {
 			estoqueService.deleteById(id);
 			return ResponseEntity.noContent().build();
 		} catch (ProdutoNaoEncontrado e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return ResponseEntity.notFound().eTag(e.getMessage()).build();
 		}
